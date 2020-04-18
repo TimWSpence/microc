@@ -1,0 +1,62 @@
+name: mcc
+version: 0.1.0.0
+github: TimWSpence/microc
+synopsis: A microc compiler in Haskell
+author: "Tim Spence"
+license-file: LICENSE
+category: Compilers/Interpreters
+ghc-options: -Wall 
+             -fno-warn-name-shadowing 
+             -Wcompat
+             -Wincomplete-uni-patterns
+extra-source-files: README.md
+
+dependencies:
+    - base >= 4.7 && < 5
+    - mtl
+    - array
+    - containers
+    - text
+    - string-conversions
+    - directory
+    - process
+    - unix
+    - filepath
+    - bytestring
+    - prettyprinter
+    - llvm-hs-pure >= 9 && < 10
+    - llvm-hs-pretty >= 0.9 && < 1
+    - megaparsec
+    - parser-combinators
+
+default-extensions: OverloadedStrings, LambdaCase
+
+library:
+  source-dirs: src
+
+executable:
+  main: Main.hs
+  source-dirs: app
+  dependencies: 
+      - optparse-applicative
+      - mcc
+      - pretty-simple
+
+tests:
+  testall:
+    main: Testall.hs
+    source-dirs: tests
+    dependencies:
+        - tasty
+        - tasty-golden
+        - tasty-hunit
+        - mcc
+
+benchmarks:
+  bench:
+    main: Bench.hs
+    source-dirs: bench
+    dependencies:
+        - criterion
+        - mcc
+        - tasty-golden
